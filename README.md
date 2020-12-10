@@ -1,2 +1,2 @@
-# tic-tac-toe
+# study
 my first repository on GitHub
