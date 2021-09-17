@@ -1,5 +1,6 @@
 import pygame
 import time
+import random
 
 pygame.init()
 
@@ -10,13 +11,22 @@ pygame.display.set_caption('SnakeGame')
 
 green = (0, 255, 0)
 black = (0, 0, 0)
-red = (213, 50 , 80)
+red = (213, 50, 80)
 
 segment_size = 20
 snake_speed = 12
 
-head_y = height // 2
-head_x = width // 2
+head_y = height // 2 // segment_size * segment_size
+head_x = width // 2 // segment_size * segment_size
+
+
+def get_random_point():
+    x = random.randint(0, width - segment_size) // segment_size * segment_size
+    y = random.randint(0, height - segment_size) // segment_size * segment_size
+    return x, y
+
+
+food_x, food_y = get_random_point()
 
 vx = 0
 vy = 0
@@ -37,7 +47,6 @@ while True:
 
     events = pygame.event.get()
     for event in events:
-        print(event)
         if event.type == pygame.QUIT:
             pygame.quit()
             quit()
@@ -60,7 +69,9 @@ while True:
 
     display.fill(green)
 
-    pygame.draw.rect(display, black, [width // 2, height // 2, segment_size, segment_size])
+    pygame.draw.rect(display, red, [food_x, food_y, segment_size, segment_size])
+
+    pygame.draw.rect(display, black, [head_x, head_y, segment_size, segment_size])
 
     pygame.display.flip()
     clock.tick(snake_speed)
